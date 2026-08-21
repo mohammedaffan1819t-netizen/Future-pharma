@@ -399,7 +399,73 @@
     <h2>🛒 Your Cart</h2>
     <div id="cart-items">Your cart is empty.</div>
     <h3>Total: ₹<span id="cart-total">0</span></h3>
-  </div>
+  </div><!-- CHECKOUT FORM -->
+<div class="checkout-box">
+
+  <h2>🛍️ Checkout</h2>
+
+  <input
+    type="text"
+    id="customer-name"
+    placeholder="Your Name"
+    required
+  >
+
+  <input
+    type="tel"
+    id="customer-phone"
+    placeholder="Phone Number"
+    required
+  >
+
+  <textarea
+    id="customer-address"
+    placeholder="Delivery Address"
+    rows="4"
+    required
+  ></textarea>
+
+  <button onclick="placeOrder()">
+    ✅ Place Order
+  </button>
+
+</div>
+
+<style>
+.checkout-box {
+  max-width: 700px;
+  margin: 25px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+}
+
+.checkout-box h2 {
+  margin-bottom: 20px;
+}
+
+.checkout-box input,
+.checkout-box textarea {
+  width: 90%;
+  padding: 13px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.checkout-box button {
+  margin-top: 15px;
+  padding: 13px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
 </section>
 
 <style>
@@ -568,7 +634,62 @@ function displayCart() {
 
   cartTotal.innerText = total;
 }
-</script>
+</script>function placeOrder() {
+
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  const name = document.getElementById("customer-name").value;
+  const phone = document.getElementById("customer-phone").value;
+  const address = document.getElementById("customer-address").value;
+
+  if (name === "" || phone === "" || address === "") {
+    alert("Please fill all the details.");
+    return;
+  }
+
+  let orderDetails = "Future Pharma Order%0A%0A";
+
+  orderDetails += "Customer: " + name + "%0A";
+  orderDetails += "Phone: " + phone + "%0A";
+  orderDetails += "Address: " + address + "%0A%0A";
+
+  orderDetails += "Medicines:%0A";
+
+  let total = 0;
+
+  cart.forEach(function(item) {
+
+    let itemTotal = item.price * item.quantity;
+
+    total += itemTotal;
+
+    orderDetails +=
+      item.name +
+      " x " +
+      item.quantity +
+      " = ₹" +
+      itemTotal +
+      "%0A";
+  });
+
+  orderDetails += "%0ATotal: ₹" + total;
+
+  alert("Order details prepared!");
+
+  // Replace this number with your pharmacy WhatsApp number
+  const pharmacyNumber = "911234567890";
+
+  const whatsappURL =
+    "https://wa.me/" +
+    pharmacyNumber +
+    "?text=" +
+    orderDetails;
+
+  window.open(whatsappURL, "_blank");
+}
 <footer>
 
     <h2>💊 Future Pharma</h2>
