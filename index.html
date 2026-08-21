@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Future Pharma | Pharmacy, Knowledge & Research</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f9fc;
+            color: #102a43;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #102a43;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #e6f7f8, #eef5ff);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #087f8c;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #52606d;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            max-width: 650px;
+            margin: auto;
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            border: none;
+            background: #087f8c;
+            color: white;
+            padding: 0 22px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .buttons {
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 22px;
+            margin: 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #087f8c;
+            color: white;
+        }
+
+        .secondary {
+            background: white;
+            color: #087f8c;
+            border: 1px solid #087f8c;
+        }
+
+        section {
+            padding: 60px 6%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #627d98;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #627d98;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .buddy {
+            background: #102a43;
+            color: white;
+            border-radius: 20px;
+            padding: 50px 25px;
+            text-align: center;
+        }
+
+        .buddy h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .buddy p {
+            color: #d9e2ec;
+            margin-bottom: 25px;
+        }
+
+        footer {
+            background: #0b1f33;
+            color: white;
+            padding: 40px 6%;
+            text-align: center;
+        }
+
+        footer p {
+            color: #bcccdc;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 800px) {
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .search-box button {
+                padding: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">💊 Future Pharma</div>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Medicines</a>
+        <a href="#">Drug Database</a>
+        <a href="#">Research</a>
+        <a href="#">Buddy</a>
+    </nav>
+</header>
+
+<section class="hero">
+
+    <h1>Your Pharmacy. <span>Your Knowledge.</span></h1>
+
+    <p>Your trusted place for medicines, drug information and pharmacy research.</p>
+
+    <div class="search-box">
+        <input type="text" placeholder="Search medicines, drugs or research...">
+        <button>Search</button>
+    </div>
+
+    <div class="buttons">
+        <a href="#" class="btn primary">Explore Medicines</a>
+        <a href="#" class="btn secondary">Explore Research</a>
+    </div>
+
+</section>
+
+<section>
+
+    <div class="section-title">
+        <h2>Explore Future Pharma</h2>
+        <p>Everything you need in one place.</p>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">💊</div>
+            <h3>Medicines</h3>
+            <p>Explore medicines and pharmacy products.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📚</div>
+            <h3>Drug Database</h3>
+            <p>Learn about drugs, uses, mechanisms and more.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔬</div>
+            <h3>Research Hub</h3>
+            <p>Discover and share pharmacy research work.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🤖</div>
+            <h3>Buddy</h3>
+            <p>Your future pharmacy study companion.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section>
+
+    <div class="buddy">
+
+        <h2>🤖 Meet Buddy</h2>
+
+        <p>
+            Your pharmacy study companion.
+            Ask questions, understand drugs and explore pharmacy topics.
+        </p>
+
+        <a href="#" class="btn primary">Chat with Buddy</a>
+
+    </div>
+
+</section>
+
+<section>
+
+    <div class="section-title">
+        <h2>🔬 Student Research Hub</h2>
+        <p>Discover. Share. Learn.</p>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">📄</div>
+            <h3>Research Papers</h3>
+            <p>Explore research submitted by pharmacy students.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎓</div>
+            <h3>Student Projects</h3>
+            <p>Find project ideas and student work.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧪</div>
+            <h3>Drug Research</h3>
+            <p>Explore research related to medicines and drugs.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📤</div>
+            <h3>Upload Research</h3>
+            <p>Share your own research with the community.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <h2>💊 Future Pharma</h2>
+
+    <p>Pharmacy • Knowledge • Research</p>
+
+    <p>© 2026 Future Pharma. All rights reserved.</p>
+
+</footer>
+
+</body>
+</html>
