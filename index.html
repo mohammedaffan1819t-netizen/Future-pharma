@@ -484,49 +484,89 @@
 
 <script>
 let cart = [];
-let total = 0;
 
 function addToCart(name, price) {
-  cart.push({
-    name: name,
-    price: price
-  });
+  let existing = cart.find(item => item.name === name);
 
-  total += price;
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({
+      name: name,
+      price: price,
+      quantity: 1
+    });
+  }
 
   displayCart();
+}
 
-  alert(name + " added to cart!");
+function increaseQuantity(index) {
+  cart[index].quantity++;
+  displayCart();
+}
+
+function decreaseQuantity(index) {
+  if (cart[index].quantity > 1) {
+    cart[index].quantity--;
+  } else {
+    cart.splice(index, 1);
+  }
+
+  displayCart();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  displayCart();
 }
 
 function displayCart() {
   const cartItems = document.getElementById("cart-items");
+  const cartTotal = document.getElementById("cart-total");
 
   if (cart.length === 0) {
     cartItems.innerHTML = "Your cart is empty.";
+    cartTotal.innerText = "0";
     return;
   }
 
+  let total = 0;
   cartItems.innerHTML = "";
 
   cart.forEach((item, index) => {
+
+    let itemTotal = item.price * item.quantity;
+    total += itemTotal;
+
     cartItems.innerHTML += `
-      <p>
-        ${item.name} - ₹${item.price}
-        <button onclick="removeFromCart(${index})">
+      <div style="margin:15px 0; padding:10px; border-bottom:1px solid #ddd;">
+
+        <strong>${item.name}</strong><br>
+
+        ₹${item.price} × ${item.quantity}
+        = ₹${itemTotal}
+
+        <br><br>
+
+        <button onclick="decreaseQuantity(${index})">➖</button>
+
+        <strong style="margin:0 10px;">
+          ${item.quantity}
+        </strong>
+
+        <button onclick="increaseQuantity(${index})">➕</button>
+
+        <button onclick="removeFromCart(${index})"
+                style="margin-left:10px;">
           ❌
         </button>
-      </p>
+
+      </div>
     `;
   });
 
-  document.getElementById("cart-total").innerText = total;
-}
-
-function removeFromCart(index) {
-  total -= cart[index].price;
-  cart.splice(index, 1);
-  displayCart();
+  cartTotal.innerText = total;
 }
 </script>
 <footer>
