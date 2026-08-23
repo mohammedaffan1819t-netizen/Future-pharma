@@ -820,6 +820,59 @@ function buddyReply(type) {
 
   messages.innerHTML +=
     "<p><strong>Buddy:</strong> " + reply + "</p>";
+}function sendBuddyMessage() {
+
+  const input = document.getElementById("buddy-input");
+  const messages = document.getElementById("buddy-messages");
+
+  const question = input.value.trim();
+
+  if (question === "") {
+    return;
+  }
+
+  messages.innerHTML +=
+    "<p><strong>You:</strong> " +
+    question +
+    "</p>";
+
+  let reply = getBuddyReply(question);
+
+  messages.innerHTML +=
+    "<p><strong>Buddy:</strong> " +
+    reply +
+    "</p>";
+
+  input.value = "";
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function getBuddyReply(question) {
+
+  const q = question.toLowerCase();
+
+  if (q.includes("paracetamol")) {
+    return "Paracetamol is commonly used to relieve pain and reduce fever. Follow the product label or advice from a qualified healthcare professional.";
+  }
+
+  if (q.includes("order") || q.includes("checkout")) {
+    return "You can add your medicines to the cart and use the Checkout section to place an order.";
+  }
+
+  if (q.includes("price") || q.includes("cost")) {
+    return "You can check medicine prices directly in the Our Medicines section.";
+  }
+
+  if (q.includes("pharmacist")) {
+    return "For personalised medicine advice, prescription medicines, or questions about your treatment, please speak with a qualified pharmacist or doctor.";
+  }
+
+  if (q.includes("hello") || q.includes("hi")) {
+    return "Hi! 👋 I'm Buddy. How can I help you with Future Pharma?";
+  }
+
+  return "I'm still learning! 🤖 I can help with Future Pharma products, orders and basic medicine information. For diagnosis or personalised treatment advice, please consult a qualified healthcare professional.";
 }
 </script>
 </body>
