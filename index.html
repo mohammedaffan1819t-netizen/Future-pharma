@@ -347,7 +347,24 @@
 
 </section>
 <!-- FUTURE PHARMA MEDICINES -->
-<section id="medicines" class="medicine-section">
+<section id="medicines" class="medicine-section"><!-- MEDICINE SEARCH -->
+<div class="medicine-search">
+
+  <input
+    type="text"
+    id="medicineSearch"
+    placeholder="🔍 Search medicines..."
+    onkeyup="searchMedicines()"
+  >
+
+  <div class="medicine-categories">
+    <button onclick="filterMedicine('all')">All</button>
+    <button onclick="filterMedicine('tablet')">💊 Tablets</button>
+    <button onclick="filterMedicine('vitamin')">🍊 Vitamins</button>
+    <button onclick="filterMedicine('oral')">🥤 Oral Care</button>
+  </div>
+
+</div>
   <h2>💊 Our Medicines</h2>
   <p class="section-subtitle">Quality healthcare products at affordable prices</p>
 
