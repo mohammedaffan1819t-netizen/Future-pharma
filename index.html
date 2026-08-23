@@ -699,97 +699,7 @@ function displayCart() {
     <p>© 2026 Future Pharma. All rights reserved.</p>
 
 </footer>
-<!-- BUDDY CUSTOMER SERVICE -->
-<div id="buddy-button" onclick="toggleBuddy()">
-  🤖
-</div>
 
-<div id="buddy-chat">
-  <div class="buddy-header">
-    <strong>🤖 Buddy</strong>
-    <span onclick="toggleBuddy()">✕</span>
-  </div>
-
-  <div id="buddy-messages">
-    <p><strong>Buddy:</strong> Hi! 👋 I'm Buddy, your Future Pharma assistant. How can I help you?</p>
-  </div>
-
-  <div class="buddy-options">
-    <button onclick="buddyReply('medicines')">💊 Medicines</button>
-    <button onclick="buddyReply('order')">📦 My Order</button>
-    <button onclick="buddyReply('pharmacist')">👨‍⚕️ Pharmacist</button>
-  </div>
-</div>
-
-<style>
-#buddy-button {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #007bff;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
-  z-index: 9999;
-}
-
-#buddy-chat {
-  display: none;
-  position: fixed;
-  right: 20px;
-  bottom: 90px;
-  width: 300px;
-  max-width: calc(100% - 40px);
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-  overflow: hidden;
-  z-index: 9999;
-}
-
-.buddy-header {
-  background: #007bff;
-  color: white;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.buddy-header span {
-  cursor: pointer;
-  font-size: 18px;
-}
-
-#buddy-messages {
-  padding: 15px;
-  min-height: 100px;
-  font-size: 14px;
-}
-
-.buddy-options {
-  padding: 10px;
-  border-top: 1px solid #eee;
-}
-
-.buddy-options button {
-  width: 100%;
-  margin: 5px 0;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #f1f6ff;
-  cursor: pointer;
-}
-</style>
-
-<script>
 function toggleBuddy() {
   const chat = document.getElementById("buddy-chat");
 
@@ -875,5 +785,162 @@ function getBuddyReply(question) {
   return "I'm still learning! 🤖 I can help with Future Pharma products, orders and basic medicine information. For diagnosis or personalised treatment advice, please consult a qualified healthcare professional.";
 }
 </script>
-</body>
+</body><!-- BUDDY CUSTOMER SERVICE -->
+<div id="buddy-button" onclick="toggleBuddy()">🤖</div>
+
+<div id="buddy-chat">
+
+  <div class="buddy-header">
+    <strong>🤖 Buddy</strong>
+    <span onclick="toggleBuddy()">✕</span>
+  </div>
+
+  <div id="buddy-messages">
+    <p><strong>Buddy:</strong> Hi! 👋 How can I help you?</p>
+  </div>
+
+  <div class="buddy-input">
+    <input
+      type="text"
+      id="buddy-input"
+      placeholder="Type your question..."
+    >
+
+    <button onclick="sendBuddyMessage()">Send</button>
+  </div>
+
+</div>
+
+<style>
+#buddy-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+#buddy-chat {
+  display: none;
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
+  width: 310px;
+  max-width: calc(100% - 40px);
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0,0,0,.25);
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.buddy-header {
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buddy-header span {
+  cursor: pointer;
+}
+
+#buddy-messages {
+  height: 220px;
+  overflow-y: auto;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.buddy-input {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.buddy-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.buddy-input button {
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+}
+</style>
+
+<script>
+function toggleBuddy() {
+  const chat = document.getElementById("buddy-chat");
+
+  if (chat.style.display === "block") {
+    chat.style.display = "none";
+  } else {
+    chat.style.display = "block";
+  }
+}
+
+function sendBuddyMessage() {
+
+  const input = document.getElementById("buddy-input");
+  const messages = document.getElementById("buddy-messages");
+
+  const question = input.value.trim();
+
+  if (question === "") return;
+
+  messages.innerHTML +=
+    "<p><strong>You:</strong> " + question + "</p>";
+
+  let answer = "I'm Buddy 🤖. I can help you with Future Pharma products and orders. For medical diagnosis or personalised treatment, please consult a qualified healthcare professional.";
+
+  const q = question.toLowerCase();
+
+  if (q.includes("hello") || q.includes("hi")) {
+    answer = "Hi! 👋 I'm Buddy. How can I help you?";
+  }
+
+  if (q.includes("paracetamol")) {
+    answer = "Paracetamol is commonly used for pain relief and fever reduction. Follow the package directions or ask a qualified healthcare professional.";
+  }
+
+  if (q.includes("order") || q.includes("checkout")) {
+    answer = "🛒 Add your medicines to the cart and then use the Checkout section to place your order.";
+  }
+
+  if (q.includes("price")) {
+    answer = "💰 You can see medicine prices in the Our Medicines section.";
+  }
+
+  messages.innerHTML +=
+    "<p><strong>Buddy:</strong> " + answer + "</p>";
+
+  input.value = "";
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+document.getElementById("buddy-input").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    sendBuddyMessage();
+  }
+});
+</script>
 </html>
