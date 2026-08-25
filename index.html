@@ -983,50 +983,74 @@ function toggleBuddy() {
   }
 }
 
-function sendBuddyMessage() {
+<script>
+function toggleBuddy() {
+  const chat = document.getElementById("buddy-chat");
 
+  if (chat.style.display === "block") {
+    chat.style.display = "none";
+  } else {
+    chat.style.display = "block";
+  }
+}
+
+function sendBuddyMessage() {
   const input = document.getElementById("buddy-input");
   const messages = document.getElementById("buddy-messages");
 
+  if (!input || !messages) {
+    alert("Buddy is not connected correctly.");
+    return;
+  }
+
   const question = input.value.trim();
 
-  if (question === "") return;
-
-  messages.innerHTML +=
-    "<p><strong>You:</strong> " + question + "</p>";
-
-  let answer = "I'm Buddy 🤖. I can help you with Future Pharma products and orders. For medical diagnosis or personalised treatment, please consult a qualified healthcare professional.";
-
-  const q = question.toLowerCase();
-
-  if (q.includes("hello") || q.includes("hi")) {
-    answer = "Hi! 👋 I'm Buddy. How can I help you?";
-  }
-
-  if (q.includes("paracetamol")) {
-    answer = "Paracetamol is commonly used for pain relief and fever reduction. Follow the package directions or ask a qualified healthcare professional.";
-  }
-
-  if (q.includes("order") || q.includes("checkout")) {
-    answer = "🛒 Add your medicines to the cart and then use the Checkout section to place your order.";
-  }
-
-  if (q.includes("price")) {
-    answer = "💰 You can see medicine prices in the Our Medicines section.";
+  if (question === "") {
+    return;
   }
 
   messages.innerHTML +=
-    "<p><strong>Buddy:</strong> " + answer + "</p>";
+    "<p><strong>You:</strong> " +
+    question +
+    "</p>";
+
+  let answer = getBuddyAnswer(question);
+
+  messages.innerHTML +=
+    "<p><strong>Buddy:</strong> " +
+    answer +
+    "</p>";
 
   input.value = "";
 
   messages.scrollTop = messages.scrollHeight;
 }
 
-document.getElementById("buddy-input").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    sendBuddyMessage();
+function getBuddyAnswer(question) {
+  const q = question.toLowerCase();
+
+  if (q.includes("hi") || q.includes("hello")) {
+    return "Hi! 👋 I'm Buddy. How can I help you?";
   }
-});
+
+  if (q.includes("paracetamol")) {
+    return "Paracetamol is commonly used for pain relief and fever reduction. Follow the package directions or ask a qualified healthcare professional.";
+  }
+
+  if (q.includes("order") || q.includes("checkout")) {
+    return "🛒 Add your medicines to the cart and then use the Checkout section.";
+  }
+
+  if (q.includes("price")) {
+    return "💰 You can check medicine prices in the Our Medicines section.";
+  }
+
+  if (q.includes("pharmacist")) {
+    return "👨‍⚕️ For personalised medicine advice, please speak with a qualified pharmacist or doctor.";
+  }
+
+  return "I'm Buddy 🤖. I can help with Future Pharma products, orders and basic medicine information.";
+}
 </script>
+</body>
 </html>
