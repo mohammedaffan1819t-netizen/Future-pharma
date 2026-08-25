@@ -685,6 +685,40 @@ function displayCart() {
   });
 
   cartTotal.innerText = total;
+}function searchMedicines() {
+  const search = document
+    .getElementById("medicineSearch")
+    .value
+    .toLowerCase();
+
+  const medicines = document.querySelectorAll(".medicine-card");
+
+  medicines.forEach(function(card) {
+    const name = card.querySelector("h3").innerText.toLowerCase();
+
+    if (name.includes(search)) {
+      card.style.display = "";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+function filterMedicine(category) {
+  const medicines = document.querySelectorAll(".medicine-card");
+
+  medicines.forEach(function(card) {
+    if (
+      category === "all" ||
+      card.dataset.category === category
+    ) {
+      card.style.display = "";
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+  document.getElementById("medicineSearch").value = "";
 }
 </script>function placeOrder() {
 
