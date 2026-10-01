@@ -1076,7 +1076,33 @@ function getBuddyReply(question) {
         return "I can help you with basic information about Future Pharma medicines, products, prices and orders.";
     }
 
+if (q.includes("cetirizine")) {
+    return "Cetirizine is an antihistamine commonly used to relieve allergy symptoms such as sneezing, runny nose and itching. Follow the product label or ask a pharmacist for appropriate use.";
+}
 
+if (q.includes("ors")) {
+    return "ORS (Oral Rehydration Solution) helps replace fluids and electrolytes lost during dehydration. Prepare and use it exactly according to the instructions on the packet.";
+}
+
+if (q.includes("vitamin c")) {
+    return "Vitamin C is a water-soluble vitamin that supports normal immune function and helps with collagen formation.";
+}
+
+if (q.includes("medicine") || q.includes("medicines")) {
+    return "I can provide basic information about medicines available on Future Pharma. For personalised treatment advice, please speak with a qualified pharmacist or doctor.";
+}
+
+if (q.includes("side effect") || q.includes("side effects")) {
+    return "Medicine side effects can vary from person to person. Please check the product information and speak with a pharmacist or doctor if you are concerned.";
+}
+
+if (q.includes("prescription")) {
+    return "Prescription medicines should be used only as directed by a qualified healthcare professional.";
+}
+
+if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+    return "Hi! 👋 I'm Buddy. How can I help you with Future Pharma?";
+}
     return "I'm still learning! 🤖 I can help with Future Pharma products, orders and basic medicine information.";
 }
 
