@@ -789,10 +789,15 @@ function filterMedicine(category) {
 function toggleBuddy() {
   const chat = document.getElementById("buddy-chat");
 
-  if (chat.style.display === "block") {
-    chat.style.display = "none";
-  } else {
+  if (!chat) {
+    alert("Buddy chat box is missing.");
+    return;
+  }
+
+  if (chat.style.display === "none" || chat.style.display === "") {
     chat.style.display = "block";
+  } else {
+    chat.style.display = "none";
   }
 }
 
