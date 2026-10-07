@@ -972,9 +972,16 @@ function buddyReply(type) {
 
 <script>
 
+<script>
+
 function toggleBuddy() {
 
     const chat = document.getElementById("buddy-chat");
+
+    if (!chat) {
+        alert("Buddy chat box is missing.");
+        return;
+    }
 
     if (chat.style.display === "block") {
         chat.style.display = "none";
@@ -1005,6 +1012,7 @@ function sendBuddyMessage() {
 
     messages.appendChild(userMessage);
 
+
     const reply = getBuddyReply(question);
 
     const buddyMessage = document.createElement("div");
@@ -1025,53 +1033,85 @@ function sendBuddyMessage() {
 
 function getBuddyReply(question) {
 
-    const q = question.toLowerCase();
-
-
-   function getBuddyReply(question) {
-
     const q = question.toLowerCase().trim();
 
+
     if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+
         return "Hi! 👋 I'm Buddy. How can I help you with Future Pharma?";
+
     }
 
-    if (q.includes("cetirizine")) {
-        return "Cetirizine is an antihistamine commonly used for allergy symptoms such as sneezing, runny nose and itching.";
+
+    if (q.includes("paracetamol") || q.includes("fever")) {
+
+        return "💊 Paracetamol is commonly used to reduce fever and relieve pain. Please follow the product label and ask a pharmacist or doctor if you're unsure.";
+
     }
+
+
+    if (q.includes("cetirizine") || q.includes("allergy")) {
+
+        return "💊 Cetirizine is an antihistamine commonly used for allergy symptoms such as sneezing, runny nose and itching.";
+
+    }
+
 
     if (q.includes("ors") || q.includes("oral rehydration")) {
-        return "ORS stands for Oral Rehydration Solution. It helps replace fluids and electrolytes during dehydration.";
+
+        return "🥤 ORS means Oral Rehydration Solution. It helps replace fluids and electrolytes during dehydration.";
+
     }
+
 
     if (q.includes("vitamin c")) {
-        return "Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
+
+        return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
+
     }
 
-    if (q.includes("paracetamol")) {
-        return "Paracetamol is commonly used to reduce fever and relieve pain. Follow the product label or ask a pharmacist or doctor if you're unsure.";
-    }
 
     if (q.includes("price") || q.includes("cost")) {
-        return "You can check the current medicine prices in the Our Medicines section. 💰";
+
+        return "💰 You can check medicine prices in the Our Medicines section.";
+
     }
+
 
     if (q.includes("order") || q.includes("checkout")) {
-        return "Add the medicine to your cart and then use the Checkout section to place your order. 🛒";
+
+        return "🛒 Add the medicine to your cart and then use the Checkout section to place your order.";
+
     }
+
 
     if (q.includes("side effect") || q.includes("side effects")) {
-        return "Side effects vary between medicines and people. Check the product information and speak with a pharmacist or doctor if you are concerned.";
+
+        return "⚠️ Side effects vary between medicines and people. Check the product information and speak with a pharmacist or doctor if you are concerned.";
+
     }
+
 
     if (q.includes("prescription")) {
-        return "Prescription medicines should be used according to the instructions of a qualified healthcare professional.";
+
+        return "📋 Prescription medicines should be used according to the instructions of a qualified healthcare professional.";
+
     }
 
-    return "I'm Buddy 🤖. I can help with basic information about Future Pharma medicines, prices and orders.";
-}
-</script>
 
+    if (q.includes("medicine") || q.includes("medicines")) {
+
+        return "💊 You can browse the medicines available in the Our Medicines section. I can also give basic information about some medicines.";
+
+    }
+
+
+    return "I'm Buddy 🤖. I can help with basic information about Future Pharma medicines, prices and orders.";
+
+}
+
+</script> 
+    
 </body>
 </html>
 
