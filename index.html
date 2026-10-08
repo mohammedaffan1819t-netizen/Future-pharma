@@ -1035,7 +1035,7 @@ function getBuddyReply(question) {
     const q = question.toLowerCase().trim();
 
 
-    // GREETING
+    // GREETINGS
     if (
         q.includes("hello") ||
         q.includes("hi") ||
@@ -1047,49 +1047,133 @@ function getBuddyReply(question) {
     }
 
 
+    // =========================
     // PARACETAMOL
-    if (
-        q.includes("paracetamol") ||
-        q.includes("acetaminophen") ||
-        q.includes("fever")
-    ) {
-        return "💊 Paracetamol is commonly used to reduce fever and relieve mild to moderate pain. Follow the product label or ask a pharmacist/doctor if you're unsure about the appropriate dose.";
+    // =========================
+
+    if (q.includes("paracetamol")) {
+
+        if (
+            q.includes("side effect") ||
+            q.includes("side effects")
+        ) {
+            return "⚠️ Paracetamol is generally well tolerated when used correctly, but excessive doses can seriously damage the liver. Follow the product label and ask a pharmacist or doctor if you are unsure.";
+        }
+
+        if (
+            q.includes("use") ||
+            q.includes("used for") ||
+            q.includes("what is")
+        ) {
+            return "💊 Paracetamol is commonly used to reduce fever and relieve mild to moderate pain.";
+        }
+
+        if (
+            q.includes("fever") ||
+            q.includes("temperature") ||
+            q.includes("pain")
+        ) {
+            return "💊 Paracetamol is commonly used for fever and mild to moderate pain. Follow the product label for use.";
+        }
+
+        return "💊 Paracetamol is commonly used to reduce fever and relieve mild to moderate pain. Follow the product label or ask a pharmacist/doctor if you're unsure.";
     }
 
 
+    // =========================
     // CETIRIZINE
-    if (
-        q.includes("cetirizine") ||
-        q.includes("allergy") ||
-        q.includes("sneezing") ||
-        q.includes("itching") ||
-        q.includes("runny nose")
-    ) {
-        return "💊 Cetirizine is an antihistamine commonly used for allergy symptoms such as sneezing, runny nose and itching. Follow the product label and ask a pharmacist if you have questions.";
+    // =========================
+
+    if (q.includes("cetirizine")) {
+
+        if (
+            q.includes("side effect") ||
+            q.includes("side effects")
+        ) {
+            return "⚠️ Cetirizine may cause drowsiness or sleepiness in some people. If you experience concerning effects, speak with a pharmacist or doctor.";
+        }
+
+        if (
+            q.includes("use") ||
+            q.includes("used for") ||
+            q.includes("what is")
+        ) {
+            return "💊 Cetirizine is an antihistamine commonly used to relieve allergy symptoms such as sneezing, runny nose and itching.";
+        }
+
+        if (
+            q.includes("allergy") ||
+            q.includes("sneezing") ||
+            q.includes("itching") ||
+            q.includes("runny nose")
+        ) {
+            return "💊 Cetirizine is commonly used for allergy symptoms such as sneezing, runny nose and itching.";
+        }
+
+        return "💊 Cetirizine is an antihistamine commonly used for allergy symptoms such as sneezing, runny nose and itching.";
     }
 
 
+    // =========================
     // ORS
+    // =========================
+
     if (
         q.includes("ors") ||
-        q.includes("oral rehydration") ||
-        q.includes("dehydration")
+        q.includes("oral rehydration")
     ) {
-        return "🥤 ORS stands for Oral Rehydration Solution. It helps replace fluids and electrolytes that are lost during dehydration. Mix and use it according to the instructions on the product.";
+
+        if (
+            q.includes("use") ||
+            q.includes("used for") ||
+            q.includes("what is")
+        ) {
+            return "🥤 ORS means Oral Rehydration Solution. It helps replace fluids and electrolytes lost during dehydration.";
+        }
+
+        if (
+            q.includes("dehydration") ||
+            q.includes("dehydrated")
+        ) {
+            return "🥤 ORS helps replace fluids and electrolytes during dehydration. Prepare and use it according to the instructions on the product.";
+        }
+
+        return "🥤 ORS stands for Oral Rehydration Solution. It helps replace fluids and electrolytes during dehydration.";
     }
 
 
+    // =========================
     // VITAMIN C
+    // =========================
+
     if (
         q.includes("vitamin c") ||
-        q.includes("vitamin-c") ||
         q.includes("ascorbic acid")
     ) {
+
+        if (
+            q.includes("use") ||
+            q.includes("used for") ||
+            q.includes("what is")
+        ) {
+            return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
+        }
+
+        if (
+            q.includes("benefit") ||
+            q.includes("benefits")
+        ) {
+            return "🍊 Vitamin C supports normal immune function, collagen formation and normal wound healing.";
+        }
+
         return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
     }
 
 
-    // MEDICINE PRICE
+    // =========================
+    // PRICE
+    // =========================
+
     if (
         q.includes("price") ||
         q.includes("cost") ||
@@ -1100,54 +1184,54 @@ function getBuddyReply(question) {
     }
 
 
-    // ORDER
+    // =========================
+    // CART & ORDER
+    // =========================
+
+    if (
+        q.includes("cart") ||
+        q.includes("add to cart")
+    ) {
+        return "🛒 Select a medicine and click Add to Cart. You can then open your cart and continue to checkout.";
+    }
+
+
     if (
         q.includes("order") ||
         q.includes("buy") ||
         q.includes("purchase") ||
         q.includes("checkout")
     ) {
-        return "🛒 To order a medicine, add it to your cart and then use the Checkout section to complete your order.";
+        return "🛒 Add the medicine to your cart and then use the Checkout section to place your order.";
     }
 
 
-    // CART
-    if (
-        q.includes("cart") ||
-        q.includes("add to cart")
-    ) {
-        return "🛒 Choose the medicine you want and click Add to Cart. You can then open your cart and continue to checkout.";
-    }
-
-
+    // =========================
     // WHATSAPP
+    // =========================
+
     if (
-        q.includes("whatsapp") ||
-        q.includes("whatsapp order")
+        q.includes("whatsapp")
     ) {
         return "📱 After checkout, your order can be sent through WhatsApp. Keep your order details ready when contacting the pharmacy.";
     }
 
 
-    // SIDE EFFECTS
-    if (
-        q.includes("side effect") ||
-        q.includes("side effects")
-    ) {
-        return "⚠️ Side effects can vary between medicines and people. Please check the medicine information and speak with a qualified pharmacist or doctor if you are concerned.";
-    }
-
-
+    // =========================
     // PRESCRIPTION
+    // =========================
+
     if (
-        q.includes("prescription") ||
-        q.includes("prescription medicine")
+        q.includes("prescription")
     ) {
         return "📋 Prescription medicines should be used according to the instructions of a qualified healthcare professional.";
     }
 
 
-    // PHARMACIST
+    // =========================
+    // PHARMACIST / DOCTOR
+    // =========================
+
     if (
         q.includes("pharmacist") ||
         q.includes("doctor")
@@ -1156,27 +1240,48 @@ function getBuddyReply(question) {
     }
 
 
-    // MEDICINES
+    // =========================
+    // GENERAL SIDE EFFECTS
+    // =========================
+
+    if (
+        q.includes("side effect") ||
+        q.includes("side effects")
+    ) {
+        return "⚠️ Side effects vary between medicines and people. Please check the medicine information and speak with a qualified pharmacist or doctor if you are concerned.";
+    }
+
+
+    // =========================
+    // GENERAL MEDICINE
+    // =========================
+
     if (
         q.includes("medicine") ||
         q.includes("medicines") ||
         q.includes("drug")
     ) {
-        return "💊 You can browse the medicines available in the Our Medicines section. Ask me about Paracetamol, Cetirizine, Vitamin C or ORS.";
+        return "💊 I can provide basic information about Paracetamol, Cetirizine, ORS and Vitamin C. Try asking: 'What is Paracetamol used for?'";
     }
 
 
+    // =========================
     // FUTURE PHARMA
+    // =========================
+
     if (
         q.includes("future pharma") ||
         q.includes("pharmacy")
     ) {
-        return "🏥 Future Pharma is your online pharmacy section where you can browse medicines, add products to your cart and place an order.";
+        return "🏥 Future Pharma lets you browse medicines, add products to your cart and place an order.";
     }
 
 
+    // =========================
     // DEFAULT
-    return "I'm Buddy 🤖. I can help with Future Pharma medicines, prices, orders, cart, checkout and basic medicine information.";
+    // =========================
+
+    return "I'm Buddy 🤖. I can help with Future Pharma medicines, prices, orders and basic medicine information.";
 
 }
 
