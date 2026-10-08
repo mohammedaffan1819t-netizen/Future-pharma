@@ -1034,14 +1034,19 @@ function getBuddyReply(question) {
 
     const q = question.toLowerCase().trim();
 
+    // Remove common punctuation
+    const clean = q.replace(/[?!.,]/g, "").trim();
 
+    // =========================
     // GREETINGS
+    // =========================
     if (
-        q.includes("hello") ||
-        q.includes("hi") ||
-        q.includes("hey") ||
-        q.includes("good morning") ||
-        q.includes("good evening")
+        clean === "hi" ||
+        clean === "hello" ||
+        clean === "hey" ||
+        clean.includes("good morning") ||
+        clean.includes("good evening") ||
+        clean.includes("good afternoon")
     ) {
         return "Hi! 👋 I'm Buddy. How can I help you with Future Pharma?";
     }
@@ -1050,92 +1055,158 @@ function getBuddyReply(question) {
     // =========================
     // PARACETAMOL
     // =========================
+    if (clean.includes("paracetamol") || clean.includes("acetaminophen")) {
 
-    if (q.includes("paracetamol")) {
-
+        // SIDE EFFECT QUESTIONS
         if (
-            q.includes("side effect") ||
-            q.includes("side effects")
+            clean.includes("side effect") ||
+            clean.includes("side effects") ||
+            clean.includes("bad effect") ||
+            clean.includes("problem") ||
+            clean.includes("harmful")
         ) {
-            return "⚠️ Paracetamol is generally well tolerated when used correctly, but excessive doses can seriously damage the liver. Follow the product label and ask a pharmacist or doctor if you are unsure.";
+            return "⚠️ Paracetamol is generally well tolerated when used correctly, but taking too much can seriously damage the liver. Follow the product label and ask a pharmacist or doctor if you are unsure.";
         }
 
+        // USE / PURPOSE QUESTIONS
         if (
-            q.includes("use") ||
-            q.includes("used for") ||
-            q.includes("what is")
+            clean.includes("use") ||
+            clean.includes("used") ||
+            clean.includes("purpose") ||
+            clean.includes("for what") ||
+            clean.includes("what does it do") ||
+            clean.includes("why is it used") ||
+            clean.includes("why use") ||
+            clean.includes("what is it for") ||
+            clean.includes("what for") ||
+            clean.includes("helps with") ||
+            clean.includes("help with") ||
+            clean.includes("treat") ||
+            clean.includes("treatment")
         ) {
             return "💊 Paracetamol is commonly used to reduce fever and relieve mild to moderate pain.";
         }
 
+        // FEVER QUESTIONS
         if (
-            q.includes("fever") ||
-            q.includes("temperature") ||
-            q.includes("pain")
+            clean.includes("fever") ||
+            clean.includes("temperature") ||
+            clean.includes("hot")
         ) {
-            return "💊 Paracetamol is commonly used for fever and mild to moderate pain. Follow the product label for use.";
+            return "🌡️ Paracetamol is commonly used to reduce fever. Follow the product label for proper use.";
         }
 
-        return "💊 Paracetamol is commonly used to reduce fever and relieve mild to moderate pain. Follow the product label or ask a pharmacist/doctor if you're unsure.";
+        // PAIN QUESTIONS
+        if (
+            clean.includes("pain") ||
+            clean.includes("headache") ||
+            clean.includes("body ache") ||
+            clean.includes("ache")
+        ) {
+            return "💊 Paracetamol is commonly used to relieve mild to moderate pain, including common headaches and body aches.";
+        }
+
+        // WHAT IS PARACETAMOL
+        if (
+            clean.includes("what is") ||
+            clean.includes("tell me about") ||
+            clean.includes("explain")
+        ) {
+            return "💊 Paracetamol is a medicine commonly used to reduce fever and relieve mild to moderate pain.";
+        }
+
+        return "💊 Paracetamol is commonly used for fever and mild to moderate pain. What would you like to know—its uses, side effects, or general information?";
     }
 
 
     // =========================
     // CETIRIZINE
     // =========================
+    if (clean.includes("cetirizine")) {
 
-    if (q.includes("cetirizine")) {
-
+        // SIDE EFFECTS
         if (
-            q.includes("side effect") ||
-            q.includes("side effects")
+            clean.includes("side effect") ||
+            clean.includes("side effects") ||
+            clean.includes("bad effect") ||
+            clean.includes("problem") ||
+            clean.includes("harmful")
         ) {
             return "⚠️ Cetirizine may cause drowsiness or sleepiness in some people. If you experience concerning effects, speak with a pharmacist or doctor.";
         }
 
+        // USE / PURPOSE
         if (
-            q.includes("use") ||
-            q.includes("used for") ||
-            q.includes("what is")
+            clean.includes("use") ||
+            clean.includes("used") ||
+            clean.includes("purpose") ||
+            clean.includes("for what") ||
+            clean.includes("what does it do") ||
+            clean.includes("why") ||
+            clean.includes("what is it for") ||
+            clean.includes("what for") ||
+            clean.includes("helps") ||
+            clean.includes("treat")
         ) {
             return "💊 Cetirizine is an antihistamine commonly used to relieve allergy symptoms such as sneezing, runny nose and itching.";
         }
 
+        // ALLERGY
         if (
-            q.includes("allergy") ||
-            q.includes("sneezing") ||
-            q.includes("itching") ||
-            q.includes("runny nose")
+            clean.includes("allergy") ||
+            clean.includes("sneeze") ||
+            clean.includes("sneezing") ||
+            clean.includes("itch") ||
+            clean.includes("itching") ||
+            clean.includes("runny nose")
         ) {
             return "💊 Cetirizine is commonly used for allergy symptoms such as sneezing, runny nose and itching.";
         }
 
-        return "💊 Cetirizine is an antihistamine commonly used for allergy symptoms such as sneezing, runny nose and itching.";
+        // WHAT IS
+        if (
+            clean.includes("what is") ||
+            clean.includes("tell me about") ||
+            clean.includes("explain")
+        ) {
+            return "💊 Cetirizine is an antihistamine commonly used to relieve allergy symptoms.";
+        }
+
+        return "💊 Cetirizine is commonly used for allergy symptoms such as sneezing, runny nose and itching. What would you like to know?";
     }
 
 
     // =========================
     // ORS
     // =========================
-
     if (
-        q.includes("ors") ||
-        q.includes("oral rehydration")
+        clean.includes("ors") ||
+        clean.includes("oral rehydration")
     ) {
 
         if (
-            q.includes("use") ||
-            q.includes("used for") ||
-            q.includes("what is")
+            clean.includes("use") ||
+            clean.includes("used") ||
+            clean.includes("purpose") ||
+            clean.includes("for what") ||
+            clean.includes("what is it for") ||
+            clean.includes("what for") ||
+            clean.includes("helps") ||
+            clean.includes("help") ||
+            clean.includes("treat") ||
+            clean.includes("dehydration") ||
+            clean.includes("dehydrated")
         ) {
             return "🥤 ORS means Oral Rehydration Solution. It helps replace fluids and electrolytes lost during dehydration.";
         }
 
         if (
-            q.includes("dehydration") ||
-            q.includes("dehydrated")
+            clean.includes("what is") ||
+            clean.includes("meaning") ||
+            clean.includes("stands for") ||
+            clean.includes("tell me about")
         ) {
-            return "🥤 ORS helps replace fluids and electrolytes during dehydration. Prepare and use it according to the instructions on the product.";
+            return "🥤 ORS stands for Oral Rehydration Solution. It helps replace fluids and electrolytes during dehydration.";
         }
 
         return "🥤 ORS stands for Oral Rehydration Solution. It helps replace fluids and electrolytes during dehydration.";
@@ -1145,62 +1216,79 @@ function getBuddyReply(question) {
     // =========================
     // VITAMIN C
     // =========================
-
     if (
-        q.includes("vitamin c") ||
-        q.includes("ascorbic acid")
+        clean.includes("vitamin c") ||
+        clean.includes("vit c") ||
+        clean.includes("ascorbic acid")
     ) {
 
         if (
-            q.includes("use") ||
-            q.includes("used for") ||
-            q.includes("what is")
+            clean.includes("benefit") ||
+            clean.includes("benefits") ||
+            clean.includes("good for") ||
+            clean.includes("help") ||
+            clean.includes("helps")
+        ) {
+            return "🍊 Vitamin C supports normal immune function, collagen formation and normal wound healing.";
+        }
+
+        if (
+            clean.includes("use") ||
+            clean.includes("used") ||
+            clean.includes("purpose") ||
+            clean.includes("what is it for") ||
+            clean.includes("what for")
         ) {
             return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
         }
 
         if (
-            q.includes("benefit") ||
-            q.includes("benefits")
+            clean.includes("what is") ||
+            clean.includes("tell me about") ||
+            clean.includes("explain")
         ) {
-            return "🍊 Vitamin C supports normal immune function, collagen formation and normal wound healing.";
+            return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
         }
 
-        return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
+        return "🍊 Vitamin C supports normal immune function and collagen formation. What would you like to know about it?";
     }
 
 
     // =========================
     // PRICE
     // =========================
-
     if (
-        q.includes("price") ||
-        q.includes("cost") ||
-        q.includes("how much") ||
-        q.includes("rate")
+        clean.includes("price") ||
+        clean.includes("cost") ||
+        clean.includes("how much") ||
+        clean.includes("rate") ||
+        clean.includes("money")
     ) {
         return "💰 You can check the current medicine prices in the Our Medicines section.";
     }
 
 
     // =========================
-    // CART & ORDER
+    // CART
     // =========================
-
     if (
-        q.includes("cart") ||
-        q.includes("add to cart")
+        clean.includes("cart") ||
+        clean.includes("add to cart") ||
+        clean.includes("shopping cart")
     ) {
         return "🛒 Select a medicine and click Add to Cart. You can then open your cart and continue to checkout.";
     }
 
 
+    // =========================
+    // ORDER / BUY
+    // =========================
     if (
-        q.includes("order") ||
-        q.includes("buy") ||
-        q.includes("purchase") ||
-        q.includes("checkout")
+        clean.includes("order") ||
+        clean.includes("buy") ||
+        clean.includes("purchase") ||
+        clean.includes("checkout") ||
+        clean.includes("want to buy")
     ) {
         return "🛒 Add the medicine to your cart and then use the Checkout section to place your order.";
     }
@@ -1209,10 +1297,7 @@ function getBuddyReply(question) {
     // =========================
     // WHATSAPP
     // =========================
-
-    if (
-        q.includes("whatsapp")
-    ) {
+    if (clean.includes("whatsapp")) {
         return "📱 After checkout, your order can be sent through WhatsApp. Keep your order details ready when contacting the pharmacy.";
     }
 
@@ -1220,9 +1305,9 @@ function getBuddyReply(question) {
     // =========================
     // PRESCRIPTION
     // =========================
-
     if (
-        q.includes("prescription")
+        clean.includes("prescription") ||
+        clean.includes("prescription medicine")
     ) {
         return "📋 Prescription medicines should be used according to the instructions of a qualified healthcare professional.";
     }
@@ -1231,57 +1316,52 @@ function getBuddyReply(question) {
     // =========================
     // PHARMACIST / DOCTOR
     // =========================
-
     if (
-        q.includes("pharmacist") ||
-        q.includes("doctor")
+        clean.includes("pharmacist") ||
+        clean.includes("doctor")
     ) {
         return "👨‍⚕️ For personalised medicine advice, prescription medicines or treatment decisions, please speak with a qualified pharmacist or doctor.";
     }
 
 
     // =========================
-    // GENERAL SIDE EFFECTS
+    // GENERAL SIDE EFFECT
     // =========================
-
     if (
-        q.includes("side effect") ||
-        q.includes("side effects")
+        clean.includes("side effect") ||
+        clean.includes("side effects")
     ) {
         return "⚠️ Side effects vary between medicines and people. Please check the medicine information and speak with a qualified pharmacist or doctor if you are concerned.";
     }
 
 
     // =========================
-    // GENERAL MEDICINE
-    // =========================
-
-    if (
-        q.includes("medicine") ||
-        q.includes("medicines") ||
-        q.includes("drug")
-    ) {
-        return "💊 I can provide basic information about Paracetamol, Cetirizine, ORS and Vitamin C. Try asking: 'What is Paracetamol used for?'";
-    }
-
-
-    // =========================
     // FUTURE PHARMA
     // =========================
-
     if (
-        q.includes("future pharma") ||
-        q.includes("pharmacy")
+        clean.includes("future pharma") ||
+        clean.includes("pharmacy")
     ) {
         return "🏥 Future Pharma lets you browse medicines, add products to your cart and place an order.";
     }
 
 
     // =========================
+    // GENERAL MEDICINE
+    // =========================
+    if (
+        clean === "medicine" ||
+        clean === "medicines" ||
+        clean.includes("drug")
+    ) {
+        return "💊 I can help with basic information about Paracetamol, Cetirizine, ORS and Vitamin C. Try asking something like 'What is paracetamol for?'";
+    }
+
+
+    // =========================
     // DEFAULT
     // =========================
-
-    return "I'm Buddy 🤖. I can help with Future Pharma medicines, prices, orders and basic medicine information.";
+    return "I'm Buddy 🤖. I can help with Future Pharma medicines, prices, orders and basic medicine information. Try asking me about Paracetamol, Cetirizine, ORS or Vitamin C.";
 
 }
 
