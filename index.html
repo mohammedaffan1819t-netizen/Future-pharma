@@ -821,32 +821,62 @@ function buddyReply(type) {
 
   messages.innerHTML +=
     "<p><strong>Buddy:</strong> " + reply + "</p>";
-}function sendBuddyMessage() {
+}async function sendBuddyMessage() {
+    const input = document.getElementById("buddy-input");
+    const messages = document.getElementById("buddy-messages");
+    const question = input.value.trim();
 
-  const input = document.getElementById("buddy-input");
-  const messages = document.getElementById("buddy-messages");
+    if (!question) return;
 
-  const question = input.value.trim();
+    const userMessage = document.createElement("p");
+    const userLabel = document.createElement("strong");
+    userLabel.textContent = "You: ";
+    userMessage.appendChild(userLabel);
+    userMessage.appendChild(document.createTextNode(question));
+    messages.appendChild(userMessage);
 
-  if (question === "") {
-    return;
-  }
+    input.value = "";
 
-  messages.innerHTML +=
-    "<p><strong>You:</strong> " +
-    question +
-    "</p>";
+    const loadingMessage = document.createElement("p");
+    const loadingLabel = document.createElement("strong");
+    loadingLabel.textContent = "Buddy: ";
+    loadingMessage.appendChild(loadingLabel);
+    loadingMessage.appendChild(document.createTextNode("Thinking..."));
+    messages.appendChild(loadingMessage);
 
-  let reply = getBuddyReply(question);
+    messages.scrollTop = messages.scrollHeight;
+    input.disabled = true;
 
-  messages.innerHTML +=
-    "<p><strong>Buddy:</strong> " +
-    reply +
-    "</p>";
+    try {
+        const response = await fetch(
+            "https://future-pharma-buddy-backend.onrender.com/api/buddy",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ question: question })
+            }
+        );
 
-  input.value = "";
+        const data = await response.json();
 
-  messages.scrollTop = messages.scrollHeight;
+        if (!response.ok) {
+            throw new Error(data.error || "Request failed");
+        }
+
+        loadingMessage.textContent = "Buddy: " + data.reply;
+
+    } catch (error) {
+        console.error("Buddy connection error:", error);
+        loadingMessage.textContent =
+            "Buddy: I couldn't connect right now. Please try again later.";
+
+    } finally {
+        input.disabled = false;
+        input.focus();
+        messages.scrollTop = messages.scrollHeight;
+    }
 }
 
 <!-- BUDDY CUSTOMER SERVICE -->
