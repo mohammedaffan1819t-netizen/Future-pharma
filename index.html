@@ -265,15 +265,15 @@
     <div class="logo">💊 Future Pharma</div>
 
     <nav>
-        <a href="#">Home</a>
-        <a href="#">Medicines</a>
-        <a href="#">Drug Database</a>
-        <a href="#">Research</a>
-        <a href="#">Buddy</a>
+        <a href="#home">Home</a>
+        <a href="#medicines">Medicines</a>
+        <a href="#explore">Drug Database</a>
+        <a href="#research">Research</a>
+        <a href="#buddy-section">Buddy</a>
     </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="home">
 
     <h1>Your Pharmacy. <span>Your Knowledge.</span></h1>
 
@@ -285,13 +285,13 @@
     </div>
 
     <div class="buttons">
-        <a href="#" class="btn primary">Explore Medicines</a>
-        <a href="#" class="btn secondary">Explore Research</a>
+        <a href="#medicines" class="btn primary">Explore Medicines</a>
+        <a href="#research" class="btn secondary">Explore Research</a>
     </div>
 
 </section>
 
-<section>
+<section id="explore">
 
     <div class="section-title">
         <h2>Explore Future Pharma</h2>
@@ -328,7 +328,7 @@
 
 </section>
 
-<section>
+<section id="buddy-section">
 
     <div class="buddy">
 
@@ -339,13 +339,13 @@
             Ask questions, understand drugs and explore pharmacy topics.
         </p>
 
-        <a href="#" class="btn primary">Chat with Buddy</a>
+        <a href="#buddy-button" class="btn primary" onclick="toggleBuddy(); return false;">Chat with Buddy</a>
 
     </div>
 
 </section>
 
-<section>
+<section id="research">
 
     <div class="section-title">
         <h2>🔬 Student Research Hub</h2>
@@ -720,7 +720,7 @@ function filterMedicine(category) {
 
   document.getElementById("medicineSearch").value = "";
 }
-</script>function placeOrder() {
+function placeOrder() {
 
   if (cart.length === 0) {
     alert("Your cart is empty!");
@@ -738,9 +738,9 @@ function filterMedicine(category) {
 
   let orderDetails = "Future Pharma Order%0A%0A";
 
-  orderDetails += "Customer: " + name + "%0A";
-  orderDetails += "Phone: " + phone + "%0A";
-  orderDetails += "Address: " + address + "%0A%0A";
+  orderDetails += "Customer: " + encodeURIComponent(name) + "%0A";
+  orderDetails += "Phone: " + encodeURIComponent(phone) + "%0A";
+  orderDetails += "Address: " + encodeURIComponent(address) + "%0A%0A";
 
   orderDetails += "Medicines:%0A";
 
@@ -753,7 +753,7 @@ function filterMedicine(category) {
     total += itemTotal;
 
     orderDetails +=
-      item.name +
+      encodeURIComponent(item.name) +
       " x " +
       item.quantity +
       " = ₹" +
@@ -765,7 +765,7 @@ function filterMedicine(category) {
 
   alert("Order details prepared!");
 
-  // Replace this number with your pharmacy WhatsApp number
+  // IMPORTANT: Replace this placeholder with your own pharmacy WhatsApp number (country code + number, digits only).
   const pharmacyNumber = "911234567890";
 
   const whatsappURL =
@@ -776,6 +776,8 @@ function filterMedicine(category) {
 
   window.open(whatsappURL, "_blank");
 }
+</script>
+
 <footer>
 
     <h2>💊 Future Pharma</h2>
@@ -786,98 +788,6 @@ function filterMedicine(category) {
 
 </footer>
 
-function toggleBuddy() {
-  const chat = document.getElementById("buddy-chat");
-
-  if (!chat) {
-    alert("Buddy chat box is missing.");
-    return;
-  }
-
-  if (chat.style.display === "none" || chat.style.display === "") {
-    chat.style.display = "block";
-  } else {
-    chat.style.display = "none";
-  }
-}
-
-function buddyReply(type) {
-
-  const messages = document.getElementById("buddy-messages");
-
-  let reply = "";
-
-  if (type === "medicines") {
-    reply = "💊 You can browse our medicine section above. For prescription medicines, please consult a qualified pharmacist/doctor.";
-  }
-
-  if (type === "order") {
-    reply = "📦 Your order is sent through WhatsApp after checkout. Please keep your order details available.";
-  }
-
-  if (type === "pharmacist") {
-    reply = "👨‍⚕️ Please contact our pharmacy team for professional medicine guidance.";
-  }
-
-  messages.innerHTML +=
-    "<p><strong>Buddy:</strong> " + reply + "</p>";
-}async function sendBuddyMessage() {
-    const input = document.getElementById("buddy-input");
-    const messages = document.getElementById("buddy-messages");
-    const question = input.value.trim();
-
-    if (!question) return;
-
-    const userMessage = document.createElement("p");
-    const userLabel = document.createElement("strong");
-    userLabel.textContent = "You: ";
-    userMessage.appendChild(userLabel);
-    userMessage.appendChild(document.createTextNode(question));
-    messages.appendChild(userMessage);
-
-    input.value = "";
-
-    const loadingMessage = document.createElement("p");
-    const loadingLabel = document.createElement("strong");
-    loadingLabel.textContent = "Buddy: ";
-    loadingMessage.appendChild(loadingLabel);
-    loadingMessage.appendChild(document.createTextNode("Thinking..."));
-    messages.appendChild(loadingMessage);
-
-    messages.scrollTop = messages.scrollHeight;
-    input.disabled = true;
-
-    try {
-        const response = await fetch(
-            "https://future-pharma-buddy-backend.onrender.com/api/buddy",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ question: question })
-            }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || "Request failed");
-        }
-
-        loadingMessage.textContent = "Buddy: " + data.reply;
-
-    } catch (error) {
-        console.error("Buddy connection error:", error);
-        loadingMessage.textContent =
-            "Buddy: I couldn't connect right now. Please try again later.";
-
-    } finally {
-        input.disabled = false;
-        input.focus();
-        messages.scrollTop = messages.scrollHeight;
-    }
-}
 
 <!-- BUDDY CUSTOMER SERVICE -->
 
@@ -1020,380 +930,58 @@ function toggleBuddy() {
 
 }
 
-
-function sendBuddyMessage() {
-
+async function sendBuddyMessage() {
     const input = document.getElementById("buddy-input");
     const messages = document.getElementById("buddy-messages");
-
     const question = input.value.trim();
 
-    if (question === "") {
-        return;
-    }
+    if (!question) return;
 
     const userMessage = document.createElement("div");
-
     userMessage.className = "buddy-message";
-
-    userMessage.innerHTML =
-        "<strong>You:</strong> " + question;
-
+    userMessage.textContent = "You: " + question;
     messages.appendChild(userMessage);
-
-
-    const reply = getBuddyReply(question);
-
-    const buddyMessage = document.createElement("div");
-
-    buddyMessage.className = "buddy-message";
-
-    buddyMessage.innerHTML =
-        "<strong>Buddy:</strong> " + reply;
-
-    messages.appendChild(buddyMessage);
 
     input.value = "";
 
+    const loadingMessage = document.createElement("div");
+    loadingMessage.className = "buddy-message";
+    loadingMessage.textContent = "Buddy: Thinking...";
+    messages.appendChild(loadingMessage);
+
     messages.scrollTop = messages.scrollHeight;
+    input.disabled = true;
 
+    try {
+        const response = await fetch("https://future-pharma-buddy-backend.onrender.com/api/buddy", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ question: question })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Request failed");
+        }
+
+        loadingMessage.textContent = "Buddy: " + data.reply;
+
+    } catch (error) {
+        loadingMessage.textContent =
+            "Buddy: I couldn't connect right now. Please check that the backend is running.";
+
+        console.error("Buddy connection error:", error);
+
+    } finally {
+        input.disabled = false;
+        input.focus();
+        messages.scrollTop = messages.scrollHeight;
+    }
 }
 
-
-function getBuddyReply(question) {
-
-    const q = question.toLowerCase().trim();
-
-    // Remove common punctuation
-    const clean = q.replace(/[?!.,]/g, "").trim();
-
-    // =========================
-    // GREETINGS
-    // =========================
-    if (
-        clean === "hi" ||
-        clean === "hello" ||
-        clean === "hey" ||
-        clean.includes("good morning") ||
-        clean.includes("good evening") ||
-        clean.includes("good afternoon")
-    ) {
-        return "Hi! 👋 I'm Buddy. How can I help you with Future Pharma?";
-    }
-
-
-    // =========================
-    // PARACETAMOL
-    // =========================
-    if (clean.includes("paracetamol") || clean.includes("acetaminophen")) {
-
-        // SIDE EFFECT QUESTIONS
-        if (
-            clean.includes("side effect") ||
-            clean.includes("side effects") ||
-            clean.includes("bad effect") ||
-            clean.includes("problem") ||
-            clean.includes("harmful")
-        ) {
-            return "⚠️ Paracetamol is generally well tolerated when used correctly, but taking too much can seriously damage the liver. Follow the product label and ask a pharmacist or doctor if you are unsure.";
-        }
-
-        // USE / PURPOSE QUESTIONS
-        if (
-            clean.includes("use") ||
-            clean.includes("used") ||
-            clean.includes("purpose") ||
-            clean.includes("for what") ||
-            clean.includes("what does it do") ||
-            clean.includes("why is it used") ||
-            clean.includes("why use") ||
-            clean.includes("what is it for") ||
-            clean.includes("what for") ||
-            clean.includes("helps with") ||
-            clean.includes("help with") ||
-            clean.includes("treat") ||
-            clean.includes("treatment")
-        ) {
-            return "💊 Paracetamol is commonly used to reduce fever and relieve mild to moderate pain.";
-        }
-
-        // FEVER QUESTIONS
-        if (
-            clean.includes("fever") ||
-            clean.includes("temperature") ||
-            clean.includes("hot")
-        ) {
-            return "🌡️ Paracetamol is commonly used to reduce fever. Follow the product label for proper use.";
-        }
-
-        // PAIN QUESTIONS
-        if (
-            clean.includes("pain") ||
-            clean.includes("headache") ||
-            clean.includes("body ache") ||
-            clean.includes("ache")
-        ) {
-            return "💊 Paracetamol is commonly used to relieve mild to moderate pain, including common headaches and body aches.";
-        }
-
-        // WHAT IS PARACETAMOL
-        if (
-            clean.includes("what is") ||
-            clean.includes("tell me about") ||
-            clean.includes("explain")
-        ) {
-            return "💊 Paracetamol is a medicine commonly used to reduce fever and relieve mild to moderate pain.";
-        }
-
-        return "💊 Paracetamol is commonly used for fever and mild to moderate pain. What would you like to know—its uses, side effects, or general information?";
-    }
-
-
-    // =========================
-    // CETIRIZINE
-    // =========================
-    if (clean.includes("cetirizine")) {
-
-        // SIDE EFFECTS
-        if (
-            clean.includes("side effect") ||
-            clean.includes("side effects") ||
-            clean.includes("bad effect") ||
-            clean.includes("problem") ||
-            clean.includes("harmful")
-        ) {
-            return "⚠️ Cetirizine may cause drowsiness or sleepiness in some people. If you experience concerning effects, speak with a pharmacist or doctor.";
-        }
-
-        // USE / PURPOSE
-        if (
-            clean.includes("use") ||
-            clean.includes("used") ||
-            clean.includes("purpose") ||
-            clean.includes("for what") ||
-            clean.includes("what does it do") ||
-            clean.includes("why") ||
-            clean.includes("what is it for") ||
-            clean.includes("what for") ||
-            clean.includes("helps") ||
-            clean.includes("treat")
-        ) {
-            return "💊 Cetirizine is an antihistamine commonly used to relieve allergy symptoms such as sneezing, runny nose and itching.";
-        }
-
-        // ALLERGY
-        if (
-            clean.includes("allergy") ||
-            clean.includes("sneeze") ||
-            clean.includes("sneezing") ||
-            clean.includes("itch") ||
-            clean.includes("itching") ||
-            clean.includes("runny nose")
-        ) {
-            return "💊 Cetirizine is commonly used for allergy symptoms such as sneezing, runny nose and itching.";
-        }
-
-        // WHAT IS
-        if (
-            clean.includes("what is") ||
-            clean.includes("tell me about") ||
-            clean.includes("explain")
-        ) {
-            return "💊 Cetirizine is an antihistamine commonly used to relieve allergy symptoms.";
-        }
-
-        return "💊 Cetirizine is commonly used for allergy symptoms such as sneezing, runny nose and itching. What would you like to know?";
-    }
-
-
-    // =========================
-    // ORS
-    // =========================
-    if (
-        clean.includes("ors") ||
-        clean.includes("oral rehydration")
-    ) {
-
-        if (
-            clean.includes("use") ||
-            clean.includes("used") ||
-            clean.includes("purpose") ||
-            clean.includes("for what") ||
-            clean.includes("what is it for") ||
-            clean.includes("what for") ||
-            clean.includes("helps") ||
-            clean.includes("help") ||
-            clean.includes("treat") ||
-            clean.includes("dehydration") ||
-            clean.includes("dehydrated")
-        ) {
-            return "🥤 ORS means Oral Rehydration Solution. It helps replace fluids and electrolytes lost during dehydration.";
-        }
-
-        if (
-            clean.includes("what is") ||
-            clean.includes("meaning") ||
-            clean.includes("stands for") ||
-            clean.includes("tell me about")
-        ) {
-            return "🥤 ORS stands for Oral Rehydration Solution. It helps replace fluids and electrolytes during dehydration.";
-        }
-
-        return "🥤 ORS stands for Oral Rehydration Solution. It helps replace fluids and electrolytes during dehydration.";
-    }
-
-
-    // =========================
-    // VITAMIN C
-    // =========================
-    if (
-        clean.includes("vitamin c") ||
-        clean.includes("vit c") ||
-        clean.includes("ascorbic acid")
-    ) {
-
-        if (
-            clean.includes("benefit") ||
-            clean.includes("benefits") ||
-            clean.includes("good for") ||
-            clean.includes("help") ||
-            clean.includes("helps")
-        ) {
-            return "🍊 Vitamin C supports normal immune function, collagen formation and normal wound healing.";
-        }
-
-        if (
-            clean.includes("use") ||
-            clean.includes("used") ||
-            clean.includes("purpose") ||
-            clean.includes("what is it for") ||
-            clean.includes("what for")
-        ) {
-            return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
-        }
-
-        if (
-            clean.includes("what is") ||
-            clean.includes("tell me about") ||
-            clean.includes("explain")
-        ) {
-            return "🍊 Vitamin C is a water-soluble vitamin that supports normal immune function and collagen formation.";
-        }
-
-        return "🍊 Vitamin C supports normal immune function and collagen formation. What would you like to know about it?";
-    }
-
-
-    // =========================
-    // PRICE
-    // =========================
-    if (
-        clean.includes("price") ||
-        clean.includes("cost") ||
-        clean.includes("how much") ||
-        clean.includes("rate") ||
-        clean.includes("money")
-    ) {
-        return "💰 You can check the current medicine prices in the Our Medicines section.";
-    }
-
-
-    // =========================
-    // CART
-    // =========================
-    if (
-        clean.includes("cart") ||
-        clean.includes("add to cart") ||
-        clean.includes("shopping cart")
-    ) {
-        return "🛒 Select a medicine and click Add to Cart. You can then open your cart and continue to checkout.";
-    }
-
-
-    // =========================
-    // ORDER / BUY
-    // =========================
-    if (
-        clean.includes("order") ||
-        clean.includes("buy") ||
-        clean.includes("purchase") ||
-        clean.includes("checkout") ||
-        clean.includes("want to buy")
-    ) {
-        return "🛒 Add the medicine to your cart and then use the Checkout section to place your order.";
-    }
-
-
-    // =========================
-    // WHATSAPP
-    // =========================
-    if (clean.includes("whatsapp")) {
-        return "📱 After checkout, your order can be sent through WhatsApp. Keep your order details ready when contacting the pharmacy.";
-    }
-
-
-    // =========================
-    // PRESCRIPTION
-    // =========================
-    if (
-        clean.includes("prescription") ||
-        clean.includes("prescription medicine")
-    ) {
-        return "📋 Prescription medicines should be used according to the instructions of a qualified healthcare professional.";
-    }
-
-
-    // =========================
-    // PHARMACIST / DOCTOR
-    // =========================
-    if (
-        clean.includes("pharmacist") ||
-        clean.includes("doctor")
-    ) {
-        return "👨‍⚕️ For personalised medicine advice, prescription medicines or treatment decisions, please speak with a qualified pharmacist or doctor.";
-    }
-
-
-    // =========================
-    // GENERAL SIDE EFFECT
-    // =========================
-    if (
-        clean.includes("side effect") ||
-        clean.includes("side effects")
-    ) {
-        return "⚠️ Side effects vary between medicines and people. Please check the medicine information and speak with a qualified pharmacist or doctor if you are concerned.";
-    }
-
-
-    // =========================
-    // FUTURE PHARMA
-    // =========================
-    if (
-        clean.includes("future pharma") ||
-        clean.includes("pharmacy")
-    ) {
-        return "🏥 Future Pharma lets you browse medicines, add products to your cart and place an order.";
-    }
-
-
-    // =========================
-    // GENERAL MEDICINE
-    // =========================
-    if (
-        clean === "medicine" ||
-        clean === "medicines" ||
-        clean.includes("drug")
-    ) {
-        return "💊 I can help with basic information about Paracetamol, Cetirizine, ORS and Vitamin C. Try asking something like 'What is paracetamol for?'";
-    }
-
-
-    // =========================
-    // DEFAULT
-    // =========================
-    return "I'm Buddy 🤖. I can help with Future Pharma medicines, prices, orders and basic medicine information. Try asking me about Paracetamol, Cetirizine, ORS or Vitamin C.";
-
-}
 
 </script>
     
