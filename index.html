@@ -256,7 +256,10 @@
 .medicine-categories button:hover {
   background: #007bff;
   color: white;
-} </style>
+}</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
@@ -312,11 +315,12 @@
             <p>Learn about drugs, uses, mechanisms and more.</p>
         </div>
 
-        <div class="card">
-            <div class="icon">🔬</div>
-            <h3>Research Hub</h3>
-            <p>Discover and share pharmacy research work.</p>
-        </div>
+       
+<a href="#research" class="card" style="text-decoration:none; color:inherit; display:block;">
+    <div class="icon">🔬</div>
+    <h3>Research Hub</h3>
+    <p>Discover and share pharmacy research work.</p>
+</a>
 
         <div class="card">
             <div class="icon">🤖</div>
@@ -324,7 +328,7 @@
             <p>Your future pharmacy study companion.</p>
         </div>
 
-    </div>
+      </div>
 
 </section>
 
@@ -345,42 +349,342 @@
 
 </section>
 
-<section id="research">
+
+<section id="research" class="fp-research">
 
     <div class="section-title">
-        <h2>🔬 Student Research Hub</h2>
-        <p>Discover. Share. Learn.</p>
+        <h2>🔬 Future Pharma Research Hub</h2>
+        <p>Discover. Share. Learn. Advance Pharmacy.</p>
     </div>
 
-    <div class="cards">
+    <div class="fp-research-intro">
+        <h3>Welcome to the Research Community</h3>
+        <p>Explore pharmacy research, discover student projects
+        and share your scientific work with the community.</p>
+    </div>
+
+    <div class="fp-research-tools">
+        <input
+            type="text"
+            id="researchSearch"
+            placeholder="Search by paper, drug, author or subject..."
+        >
+        <button type="button" onclick="searchResearch()">Search</button>
+    </div>
+
+    <div class="fp-research-grid">
 
         <div class="card">
             <div class="icon">📄</div>
             <h3>Research Papers</h3>
             <p>Explore research submitted by pharmacy students.</p>
+            <a href="#research-library" class="btn primary">Explore Papers</a>
         </div>
 
         <div class="card">
             <div class="icon">🎓</div>
             <h3>Student Projects</h3>
-            <p>Find project ideas and student work.</p>
+            <p>Discover pharmacy project ideas and student work.</p>
+            <a href="#research-library" class="btn primary">View Projects</a>
         </div>
 
         <div class="card">
             <div class="icon">🧪</div>
             <h3>Drug Research</h3>
             <p>Explore research related to medicines and drugs.</p>
+            <a href="#research-library" class="btn primary">Explore Research</a>
         </div>
 
         <div class="card">
             <div class="icon">📤</div>
-            <h3>Upload Research</h3>
-            <p>Share your own research with the community.</p>
+            <h3>Publish Research</h3>
+            <p>Submit your research for review by the platform.</p>
+            <a href="#submit-research" class="btn primary">Submit Paper</a>
         </div>
 
     </div>
 
+    <div id="research-library" class="fp-research-library">
+
+        <h3>📚 Research Library</h3>
+        <p>Explore available research submissions.</p>
+
+        <div id="researchResults">
+            <p>No research papers have been published yet.
+            Be the first to submit your research!</p>
+        </div>
+
+    </div>
+
+    <div id="submit-research" class="fp-submit-research">
+
+        <h3>📤 Submit Your Research</h3>
+        <p>Provide your research details for review.</p>
+
+        <form id="researchForm">
+
+            <label>Research Paper Title</label>
+            <input type="text" id="paperTitle" required
+                   placeholder="Enter your research title">
+
+            <label>Student / Author Name</label>
+            <input type="text" id="paperAuthor" required
+                   placeholder="Enter author name">
+
+            <label>College / Institution</label>
+            <input type="text" id="paperCollege"
+                   placeholder="Enter college name">
+
+            <label>Research Subject</label>
+            <select id="paperSubject" required>
+                <option value="">Select subject</option>
+                <option>Pharmacology</option>
+                <option>Pharmaceutics</option>
+                <option>Pharmaceutical Chemistry</option>
+                <option>Pharmacognosy</option>
+                <option>Clinical Pharmacy</option>
+                <option>Other</option>
+            </select>
+
+            <label>Related Drug (if applicable)</label>
+            <input type="text" id="paperDrug"
+                   placeholder="Example: Paracetamol">
+
+            <label>Research Abstract</label>
+            <textarea id="paperAbstract" required
+                      placeholder="Write a short summary of your research..."
+                      rows="5"></textarea>
+
+            <label>Research Paper Link (optional)</label>
+            <input type="url" id="paperLink"
+                   placeholder="Paste a link to your paper">
+
+            <button type="submit" class="btn primary">
+                Submit for Review
+            </button>
+
+        </form>
+
+        <p id="researchMessage" role="status"></p>
+
+        <p class="fp-review-note">
+            Submissions are demonstrations stored in this browser.
+            They are not automatically published or scientifically verified.
+        </p>
+
+    </div>
+
 </section>
+
+<style>
+.fp-research {
+    padding: 35px 6%;
+}
+
+.fp-research-intro,
+.fp-research-library,
+.fp-submit-research {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin: 25px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.fp-research-tools {
+    display: flex;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.fp-research-tools input {
+    flex: 1;
+}
+
+.fp-research-tools input,
+.fp-submit-research input,
+.fp-submit-research select,
+.fp-submit-research textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 16px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font: inherit;
+}
+
+.fp-research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 18px;
+}
+
+.fp-research-grid .card {
+    padding: 20px;
+}
+
+.fp-research-grid .btn,
+.fp-submit-research button,
+.fp-research-tools button {
+    display: inline-block;
+    padding: 11px 17px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    background: #087ff5;
+    color: white;
+    text-decoration: none;
+    margin-top: 12px;
+}
+
+.fp-research-tools button {
+    margin-top: 8px;
+}
+
+.fp-research-tools input {
+    min-width: 0;
+}
+
+.fp-paper {
+    padding: 18px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    margin: 15px 0;
+}
+
+.fp-paper a {
+    color: #087ff5;
+}
+
+.fp-review-note {
+    color: #777;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+@media(max-width:600px) {
+    .fp-research-tools {
+        flex-direction: column;
+    }
+}
+</style>
+
+<script>
+(function () {
+    const storageKey = "futurePharmaResearchDemo";
+
+    function getPapers() {
+        try {
+            return JSON.parse(localStorage.getItem(storageKey)) || [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function displayPapers(papers) {
+        const results = document.getElementById("researchResults");
+        if (!results) return;
+
+        if (papers.length === 0) {
+            results.innerHTML = "<p>No matching papers found.</p>";
+            return;
+        }
+
+        results.innerHTML = papers.map(function (paper) {
+            return `
+                <div class="fp-paper">
+                    <h4>${escapeText(paper.title)}</h4>
+                    <p><strong>Author:</strong> ${escapeText(paper.author)}</p>
+                    <p><strong>Subject:</strong> ${escapeText(paper.subject)}</p>
+                    <p><strong>Drug:</strong> ${escapeText(paper.drug || "Not specified")}</p>
+                    <p>${escapeText(paper.abstract)}</p>
+                    <p><strong>Status:</strong> Pending review</p>
+                    ${paper.link ? `<a href="${escapeText(paper.link)}" target="_blank" rel="noopener noreferrer">View paper link</a>` : ""}
+                </div>
+            `;
+        }).join("");
+    }
+
+    function escapeText(value) {
+        return String(value || "").replace(/[&<>"']/g, function (char) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[char];
+        });
+    }
+
+    window.searchResearch = function () {
+        const query = document.getElementById("researchSearch").value.toLowerCase();
+
+        const filtered = getPapers().filter(function (paper) {
+            return [
+                paper.title,
+                paper.author,
+                paper.subject,
+                paper.drug,
+                paper.abstract
+            ].join(" ").toLowerCase().includes(query);
+        });
+
+        displayPapers(filtered);
+        document.getElementById("research-library").scrollIntoView({
+            behavior: "smooth"
+        });
+    };
+
+    document.getElementById("researchForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const paper = {
+            title: document.getElementById("paperTitle").value.trim(),
+            author: document.getElementById("paperAuthor").value.trim(),
+            college: document.getElementById("paperCollege").value.trim(),
+            subject: document.getElementById("paperSubject").value,
+            drug: document.getElementById("paperDrug").value.trim(),
+            abstract: document.getElementById("paperAbstract").value.trim(),
+            link: document.getElementById("paperLink").value.trim(),
+            status: "Pending review"
+        };
+
+        if (paper.link) {
+            try {
+                const url = new URL(paper.link);
+                if (url.protocol !== "https:" && url.protocol !== "http:") {
+                    throw new Error("Invalid link");
+                }
+            } catch (error) {
+                document.getElementById("researchMessage").textContent =
+                    "Please enter a valid web link.";
+                return;
+            }
+        }
+
+        const papers = getPapers();
+        papers.push(paper);
+
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(papers));
+        } catch (error) {
+            document.getElementById("researchMessage").textContent =
+                "Could not save this submission in your browser.";
+            return;
+        }
+
+        document.getElementById("researchMessage").textContent =
+            "Your demo submission has been saved in this browser and is marked Pending Review.";
+
+        this.reset();
+        displayPapers(getPapers());
+    });
+
+    displayPapers(getPapers());
+})();
+</script>
+
 <!-- FUTURE PHARMA MEDICINES -->
 <section id="medicines" class="medicine-section"><!-- MEDICINE SEARCH -->
 <div class="medicine-search">
@@ -984,7 +1288,15 @@ async function sendBuddyMessage() {
 
 
 </script>
-    
+ <script>
+const SUPABASE_URL = "https://oheliyfvuwhganbpvxgo.supabase.co/rest/v1/";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_0FrqPaakSvOoGuwSvjwtOw_NwEENRU5";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+</script>   
 </body>
 </html>
 
